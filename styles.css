@@ -376,12 +376,12 @@ footer::before {
 /* Responsive design */
 @media (max-width: 600px) {
     header {
-        padding: 5rem 1rem 1rem;
+        padding: 1rem 1rem 1rem;
         position: relative;
     }
     
     header h1 {
-        margin-top: 1rem;
+        margin-top: 3rem;
         font-size: 2rem;
     }
     
@@ -393,7 +393,7 @@ footer::before {
     
     .search-container {
         position: absolute;
-        top: 1rem;
+        top: 0.5rem;
         left: 50%;
         transform: translateX(-50%);
         width: 90%;
@@ -406,8 +406,8 @@ footer::before {
     }
     
     .theme-toggle {
-        top: 1rem;
-        right: 1rem;
+        top: 0.5rem;
+        right: 0.5rem;
         z-index: 1001;
     }
     
