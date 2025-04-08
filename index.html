@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-sun"></i>
+    </button>
     <header>
         <h1>Abl Sh</h1>
         <nav>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="جستجو...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="search-results"></div>
+            </div>
             <a href="#home">خانه</a>
             <a href="#skills">مهارت‌ها</a>
             <a href="#contact">تماس</a>
@@ -60,5 +70,96 @@
     <footer>
         <p>&copy; 2025 Abl Sh. All rights reserved</p>
     </footer>
+
+    <script>
+        // Theme switching functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const html = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            const searchResults = document.querySelector('.search-results');
+            
+            // Define searchable content
+            const searchableContent = [
+                { title: 'خانه', id: 'home', description: 'صفحه اصلی' },
+                { title: 'مهارت‌ها', id: 'skills', description: 'مهارت‌های من' },
+                { title: 'HTML5', id: 'skills', description: 'مهارت HTML5' },
+                { title: 'CSS3', id: 'skills', description: 'مهارت CSS3' },
+                { title: 'تماس', id: 'contact', description: 'اطلاعات تماس' },
+                { title: 'ایمیل', id: 'contact', description: 'ارسال ایمیل' },
+                { title: 'گیت‌هاب', id: 'contact', description: 'پروفایل گیت‌هاب' },
+                { title: 'تلگرام', id: 'contact', description: 'ارتباط از طریق تلگرام' }
+            ];
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    searchResults.innerHTML = '';
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                const results = searchableContent.filter(item => 
+                    item.title.toLowerCase().includes(searchTerm) || 
+                    item.description.toLowerCase().includes(searchTerm)
+                );
+
+                if (results.length > 0) {
+                    searchResults.innerHTML = results.map(item => `
+                        <div class="search-result-item" data-section="${item.id}">
+                            <div class="result-title">${item.title}</div>
+                            <div class="result-description">${item.description}</div>
+                        </div>
+                    `).join('');
+                    searchResults.style.display = 'block';
+                } else {
+                    searchResults.innerHTML = '<div class="no-results">نتیجه‌ای یافت نشد</div>';
+                    searchResults.style.display = 'block';
+                }
+            });
+
+            // Handle click on search results
+            searchResults.addEventListener('click', function(e) {
+                const resultItem = e.target.closest('.search-result-item');
+                if (resultItem) {
+                    const sectionId = resultItem.dataset.section;
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                    }
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
