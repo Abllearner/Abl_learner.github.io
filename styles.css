@@ -139,9 +139,7 @@ nav a:hover::after {
 }
 
 .search-container {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
+    position: relative;
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.15);
@@ -393,26 +391,28 @@ footer::before {
     }
     
     .search-container {
-        position: fixed;
-        top: 1rem;
-        left: 1rem;
+        position: relative;
         width: auto;
         max-width: none;
         transform: none;
+        margin-bottom: 1rem;
     }
     
     .search-input {
-        width: 150px;
+        width: 120px;
+        font-size: 0.9rem;
     }
     
     .theme-toggle {
-        top: 1rem;
-        right: 1rem;
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-left: 1rem;
         z-index: 1001;
     }
     
     .search-results {
-        width: 200px;
+        width: 180px;
         left: 0;
     }
     
